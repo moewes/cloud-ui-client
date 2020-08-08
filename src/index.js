@@ -9,6 +9,10 @@ class OpenDxpPortlet extends HTMLElement {
         return this.getAttribute("backend")
     }
 
+    set backend(value) {
+        this.setAttribute("backend", value);
+    }
+
     connectedCallback() {
         this.attachShadow({ mode: 'open' });
         this.fetchApp();
@@ -78,6 +82,7 @@ class OpenDxpPortlet extends HTMLElement {
         if (component.children) {
             component.children.forEach(child => this.renderElement(child, item));
         }
+        this.backend = component.id;
     }
 
     sendToApp(message) {
