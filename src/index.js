@@ -55,22 +55,22 @@ class OpenDxpPortlet extends HTMLElement {
             item.innerHTML = component.innerHtml;
         }
         if (component.attributes) {
-            console.log('has attributes')
+            console.log(component.attributes)
+            component.attributes.forEach((attribute) => {
+                item.setAttribute(attribute.name,attribute.value);
+            })
         }
         if (component.events) {
             component.events.forEach((eventdef) => {
                 item.addEventListener(eventdef, (event) => {
-                    console.log(event);
-                    console.log(event.path[0].id);
-
-                    let message = { id: event.path[0].id, event: eventdef, fields: [] };
+                   
+                    let message = { id: component.id, event: eventdef, fields: [] };
                     this.fields.forEach((value, key) => {
                         if (value) {
                             let field = { name: key, value: value };
                             message.fields.push(field);
                         }
                     });
-                    console.log(JSON.stringify(message));
                     this.sendToApp(message);
                 });
             });
