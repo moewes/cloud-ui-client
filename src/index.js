@@ -31,7 +31,6 @@ class OpenDxpPortlet extends HTMLElement {
                 .then(data => data.json())
                 .then((json) => {
                     json.forEach(component => {
-                        console.log(component);
                         this.renderElement(component, this.shadowRoot);
                     });
                 })
@@ -45,17 +44,13 @@ class OpenDxpPortlet extends HTMLElement {
         if (component.value) {
             item.value = component.value;
             item.addEventListener("input", (event) => {
-                console.log(event);
-                console.log(event.path[0].id);
-                const field = event.path[0];
-                this.fields.set(field.id, field.value);
+               this.fields.set(item.id, item.value);
             });
         }
         if (component.innerHtml) {
             item.innerHTML = component.innerHtml;
         }
         if (component.attributes) {
-            console.log(component.attributes)
             component.attributes.forEach((attribute) => {
                 item.setAttribute(attribute.name,attribute.value);
             })
@@ -97,13 +92,10 @@ class OpenDxpPortlet extends HTMLElement {
                 })
                 .then(data => data.json())
                 .then((json) => {
-                    console.log(this.shadowRoot);
                     this.shadowRoot.childNodes.forEach(item => {
                         this.shadowRoot.removeChild(item);
                     });
-                    console.log(this.shadowRoot);
                     json.forEach(component => {
-                        console.log(component);
                         this.renderElement(component, this.shadowRoot);
                     });
                 })
