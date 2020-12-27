@@ -71,12 +71,12 @@ class OpenDxpPortlet extends HTMLElement {
             });
         }
 
-        parent.appendChild(item);
-
         this.fields.set(component.id, component.value);
         if (component.children) {
             component.children.forEach(child => this.renderElement(child, item));
         }
+
+        parent.appendChild(item);
         this.backend = component.id;
     }
 
