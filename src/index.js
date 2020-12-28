@@ -41,7 +41,7 @@ class OpenDxpPortlet extends HTMLElement {
     renderElement(component, parent) {
         const item = document.createElement(component.tag);
         item.id = component.id;
-        if (component.value) {
+        if (component.hasInput) {
             item.value = component.value;
             item.addEventListener("input", (event) => {
                this.fields.set(item.id, item.value);
