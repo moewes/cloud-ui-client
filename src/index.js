@@ -1,5 +1,5 @@
 
-class OpenDxpPortlet extends HTMLElement {
+class CloudUiView extends HTMLElement {
     constructor() {
         super();
         this.fields = new Map();
@@ -16,10 +16,6 @@ class OpenDxpPortlet extends HTMLElement {
     connectedCallback() {
         this.attachShadow({ mode: 'open' });
         this.fetchApp();
-    }
-
-    disconnectedCallback() {
-        console.log("OpenDxpPortlet disconnecetCallback called");
     }
 
     fetchApp() {
@@ -104,4 +100,4 @@ class OpenDxpPortlet extends HTMLElement {
     }
 }
 
-customElements.define('open-dxp-portlet', OpenDxpPortlet);
+customElements.define('cloudui-view', CloudUiView);
