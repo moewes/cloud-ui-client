@@ -9,18 +9,15 @@ class CloudUiView extends HTMLElement {
         return this.getAttribute("backend")
     }
 
-    set backend(value) {
-        this.setAttribute("backend", value);
-    }
-
     connectedCallback() {
         this.attachShadow({ mode: 'open' });
         this.fetchApp();
     }
 
     fetchApp() {
+        const url = this.backend;
         return new Promise((res, rej) => {
-            fetch(this.backend ,{method: 'GET', headers: {
+            fetch(url ,{method: 'GET', headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'}
             },)
@@ -55,7 +52,7 @@ class CloudUiView extends HTMLElement {
             component.events.forEach((eventdef) => {
                 item.addEventListener(eventdef, (event) => {
                    
-                    let message = { id: component.id, event: eventdef, fields: [] };
+                    let message = { id: component.id, event: eventdef, fields: [], details: event };
                     this.fields.forEach((value, key) => {
                         if (value) {
                             let field = { name: key, value: value };
@@ -77,8 +74,9 @@ class CloudUiView extends HTMLElement {
     }
 
     sendToApp(message) {
+        const url = this.backend;
         return new Promise((res, rej) => {
-            fetch(this.backend, 
+            fetch(url,
                 {
                     method: 'POST', headers: {
                         'Accept': 'application/json',
