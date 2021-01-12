@@ -9,6 +9,11 @@ class CloudUiView extends HTMLElement {
         return this.getAttribute("backend")
     }
 
+    set backend(value) {
+        let prefix = this.backend.substring(0,this.backend.lastIndexOf("/") +1);
+        this.setAttribute("backend",prefix + value);
+    }
+
     connectedCallback() {
         this.attachShadow({ mode: 'open' });
         this.fetchApp();
@@ -51,8 +56,17 @@ class CloudUiView extends HTMLElement {
         if (component.events) {
             component.events.forEach((eventdef) => {
                 item.addEventListener(eventdef, (event) => {
-                   
-                    let message = { id: component.id, event: eventdef, fields: [], details: event };
+                   let detail
+
+                   if (event instanceof CustomEvent && event.detail) {
+                       detail = event.detail;
+                       if (detail.targetRef) {
+                         detail.targetRef = detail.targetRef.id;
+                       }
+                   } else {
+                       detail = event;
+                   }
+                    let message = { id: component.id, event: eventdef, fields: [], details: detail };
                     this.fields.forEach((value, key) => {
                         if (value) {
                             let field = { name: key, value: value };
