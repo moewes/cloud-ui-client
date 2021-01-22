@@ -84,6 +84,12 @@ class CloudUiView extends HTMLElement {
         }
 
         parent.appendChild(item);
+         if (component.properties) {
+                    component.properties.forEach((property) => {
+                        value = JSON.parse(property.value);
+                        item[property.name] = value;
+                    })
+                }
         this.backend = component.id;
     }
 
