@@ -42,8 +42,8 @@ class CloudUiView extends HTMLElement {
         if (component.hasInput) {
             item.value = component.value;
             item.addEventListener("input", (event) => {
-               this.fields.set(item.id, item.value);
-            });
+            this.fields.set(item.id, item.value);
+        });
         }
         if (component.innerHtml) {
             item.innerHTML = component.innerHtml;
@@ -55,18 +55,22 @@ class CloudUiView extends HTMLElement {
         }
         if (component.events) {
             component.events.forEach((eventdef) => {
-                item.addEventListener(eventdef, (event) => {
+                item.addEventListener(eventdef.eventName, (event) => {
                    let detail
 
                    if (event instanceof CustomEvent && event.detail) {
                        detail = event.detail;
-                       if (detail.targetRef) {
-                         detail.targetRef = detail.targetRef.id;
+                       if (eventdef.attributeMappings) {
+                         eventdef.attributeMappings.forEach((mapping) => {
+                            if (mapping.htmlElement) {
+                                detail[mapping.fieldName] = detail[mapping.fieldName].id;
+                            }
+                         });
                        }
                    } else {
                        detail = event;
                    }
-                    let message = { id: component.id, event: eventdef, fields: [], details: detail };
+                    let message = { id: component.id, event: eventdef.eventName, fields: [], details: detail };
                     this.fields.forEach((value, key) => {
                         if (value) {
                             let field = { name: key, value: value };
