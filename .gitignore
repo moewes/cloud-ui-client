@@ -4,3 +4,6 @@ dist
 node
 target
 /cloud-ui-client.iml
+.classpath
+.project
+/.settings

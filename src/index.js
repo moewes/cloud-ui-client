@@ -14,6 +14,10 @@ class CloudUiView extends HTMLElement {
         this.setAttribute("backend",prefix + value);
     }
 
+    get token() {
+        return this.getAttribute("bearer_token")
+    }
+
     connectedCallback() {
         this.attachShadow({ mode: 'open' });
         this.fetchApp();
@@ -21,10 +25,13 @@ class CloudUiView extends HTMLElement {
 
     fetchApp() {
         const url = this.backend;
+        const auth_header = ((typeof(this.token) !== 'undefined') && (this.token !== null)) ? 'Bearer ' + this.token : '';
         return new Promise((res, rej) => {
             fetch(url ,{method: 'GET', headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'}
+                'Content-Type': 'application/json',
+                'Authorization': auth_header
+            }
             },)
                 .then(data => data.json())
                 .then((json) => {
@@ -99,12 +106,14 @@ class CloudUiView extends HTMLElement {
 
     sendToApp(message) {
         const url = this.backend;
+        const auth_header = ((typeof(this.token) !== 'undefined') && (this.token !== null)) ? 'Bearer ' + this.token : '';
         return new Promise((res, rej) => {
             fetch(url,
                 {
                     method: 'POST', headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': auth_header
                     },
                     body: JSON.stringify(message)
                 })
