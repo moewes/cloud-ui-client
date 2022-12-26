@@ -2,14 +2,14 @@
   "name": "cloudui-client",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "xxxmain": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx parcel build src/index.js -d target/classes/META-INF/resources/webjars/cloud-ui/0.2.0"
+    "build": "npx parcel build src/index.js --dist-dir target/classes/META-INF/resources/webjars/cloud-ui/0.2.0"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel": "^2.0.0"
   }
 }
