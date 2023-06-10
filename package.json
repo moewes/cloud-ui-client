@@ -4,12 +4,13 @@
   "description": "",
   "xxxmain": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx parcel build src/index.js --dist-dir target/classes/META-INF/resources/webjars/cloud-ui/0.4.0"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.8.3"
+    "vite": "^4.3.2"
   }
 }
