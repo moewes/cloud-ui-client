@@ -35,7 +35,6 @@ class CloudUiView extends HTMLElement {
             },)
                 .then(data => data.json())
                 .then((json) => {
-                    console.log(json.info);
                     this.renderElement(json.view, this.shadowRoot);
                     this.handleEvents(json);
                 })
@@ -144,10 +143,11 @@ class CloudUiView extends HTMLElement {
                 })
                 .then(data => data.json())
                 .then((json) => {
+                    let oldNodes = []
                     this.shadowRoot.childNodes.forEach(item => {
-                        this.shadowRoot.removeChild(item);
+                        oldNodes.push(item);
                     });
-                     console.log(json.info);
+                    oldNodes.forEach(item => { this.shadowRoot.removeChild(item);})
                      if (json.navigation) {
                          this.dispatchEvent( new CustomEvent("cloudui", {
                             bubbles: true,
