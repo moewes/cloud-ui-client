@@ -35,9 +35,9 @@ class CloudUiView extends HTMLElement {
             },)
                 .then(data => data.json())
                 .then((json) => {
-                    json.forEach(component => {
-                        this.renderElement(component, this.shadowRoot);
-                    });
+                    console.log(json.info);
+                    this.renderElement(json.view, this.shadowRoot);
+                    this.handleEvents(json);
                 })
                 .catch((error) => rej(error));
         })
@@ -104,6 +104,31 @@ class CloudUiView extends HTMLElement {
         this.backend = component.id;
     }
 
+    handleEvents(json) {
+       if (json.title) {
+         this.dispatchEvent( new CustomEvent("cloudui", {
+                                 bubbles: true,
+                                 detail: { type : 'setTitle',
+                                 title: json.title
+                                 },
+         }));
+       }
+       if (json.changeUrl) {
+         this.dispatchEvent( new CustomEvent("cloudui", {
+                                 bubbles: true,
+                                 detail: { type : 'replaceState',
+                                 url: json.url }
+         }));
+       }
+       if (json.alert) {
+         this.dispatchEvent( new CustomEvent("cloudui", {
+                                 bubbles: true,
+                                 detail: { type : 'showAlert',
+                                 text: json.text },
+         }));
+       }
+    }
+
     sendToApp(message) {
         const url = this.backend;
         const auth_header = ((typeof(this.token) !== 'undefined') && (this.token !== null)) ? 'Bearer ' + this.token : '';
@@ -122,9 +147,17 @@ class CloudUiView extends HTMLElement {
                     this.shadowRoot.childNodes.forEach(item => {
                         this.shadowRoot.removeChild(item);
                     });
-                    json.forEach(component => {
-                        this.renderElement(component, this.shadowRoot);
-                    });
+                     console.log(json.info);
+                     if (json.navigation) {
+                         this.dispatchEvent( new CustomEvent("cloudui", {
+                            bubbles: true,
+                            detail: { type : 'open',
+                            url: json.url,
+                            target: json.target },
+                         }));
+                     }
+                     this.renderElement(json.view, this.shadowRoot);
+                     this.handleEvents(json);
                 })
                 .catch((error) => rej(error));
         })
