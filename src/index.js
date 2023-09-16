@@ -19,7 +19,6 @@ class CloudUiView extends HTMLElement {
     }
 
     connectedCallback() {
-        this.attachShadow({ mode: 'open' });
         this.fetchApp();
     }
 
@@ -136,8 +135,8 @@ class CloudUiView extends HTMLElement {
                 {
                     method: 'POST', headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': auth_header
+                        'Content-Type': 'application/json'
+                 //       'Authorization': auth_header
                     },
                     body: JSON.stringify(message)
                 })

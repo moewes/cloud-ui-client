@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   build: {
-    outDir: "target/classes/META-INF/resources/webjars/cloudui-client/0.4.0",
+    outDir: "target/classes/META-INF/resources/webjars/cloudui-client/0.4.1",
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.js'),
