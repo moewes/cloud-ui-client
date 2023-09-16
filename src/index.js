@@ -19,6 +19,7 @@ class CloudUiView extends HTMLElement {
     }
 
     connectedCallback() {
+        this.attachShadow({ mode: 'open' });
         this.fetchApp();
     }
 
