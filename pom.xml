@@ -5,7 +5,7 @@
 
     <groupId>net.moewes.cloud-ui</groupId>
     <artifactId>cloud-ui-client</artifactId>
-    <version>0.4.4-SNAPSHOT</version>
+    <version>0.4.4</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
